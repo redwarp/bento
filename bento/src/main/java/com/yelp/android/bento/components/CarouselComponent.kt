@@ -31,7 +31,7 @@ import com.yelp.android.bento.utils.inflate
  */
 open class CarouselComponent(
         private val carouselViewHolder: Class<out CarouselComponentViewHolder> = CarouselComponentViewHolder::class.java
-) : Component(), RecyclerViewComponentController.SharesViewPool {
+) : Component<Any?, Any?>(), RecyclerViewComponentController.SharesViewPool {
 
     private val group = ComponentGroup()
     private var sharedPool: RecyclerView.RecycledViewPool? = null
@@ -42,7 +42,7 @@ open class CarouselComponent(
 
     final override fun getPresenter(position: Int) = null
 
-    final override fun getCount() = 1
+    final override val count = 1
 
     final override fun getHolderType(position: Int) = carouselViewHolder
 
@@ -50,15 +50,15 @@ open class CarouselComponent(
         sharedPool = pool
     }
 
-    fun addComponent(component: Component) {
+    fun addComponent(component: Component<out Any?, out Any?>) {
         group.addComponent(component)
     }
 
-    fun addComponent(index: Int, component: Component) {
+    fun addComponent(index: Int, component: Component<out Any?, out Any?>) {
         group.addComponent(index, component)
     }
 
-    fun addAll(components: Collection<Component>) = components.forEach(::addComponent)
+    fun addAll(components: Collection<Component<out Any?, out Any?>>) = components.forEach(::addComponent)
 }
 
 /**

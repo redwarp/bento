@@ -28,10 +28,7 @@ class GridComponentsActivity : AppCompatActivity() {
                 ListComponentExampleViewHolder::class.java,
                 columns
         ).apply {
-            toggleDivider(false)
             setData((0..9).map { "$columns:$it" })
-            setStartGap(50)
-            setEndGap(50)
             spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return if (position % (numberLanes + 1) == 0) numberLanes else 1

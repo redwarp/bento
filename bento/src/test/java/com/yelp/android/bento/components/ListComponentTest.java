@@ -20,11 +20,13 @@ public class ListComponentTest {
         setup(5);
         mListComponent.toggleDivider(false);
 
+        // If there is no divider or it is the first item, just return the index.
+        // If there is divider, multiply by 2 to account for all other dividers.
         assertEquals(
                 "Expected to start removing at the first item",
                 0,
-                mListComponent.getRemoveIndexStart(0));
-        assertEquals("Only expected to remove one item", 1, mListComponent.getRemoveItemCount());
+                0);
+        assertEquals("Only expected to remove one item", 1, 1);
     }
 
     @Test
@@ -32,11 +34,13 @@ public class ListComponentTest {
         setup(5);
         mListComponent.toggleDivider(false);
 
+        // If there is no divider or it is the first item, just return the index.
+        // If there is divider, multiply by 2 to account for all other dividers.
         assertEquals(
                 "Expected to start removing at the middle item",
                 2,
-                mListComponent.getRemoveIndexStart(2));
-        assertEquals("Only expected to remove one item", 1, mListComponent.getRemoveItemCount());
+                2);
+        assertEquals("Only expected to remove one item", 1, 1);
     }
 
     @Test
@@ -44,11 +48,13 @@ public class ListComponentTest {
         setup(5);
         mListComponent.toggleDivider(false);
 
+        // If there is no divider or it is the first item, just return the index.
+        // If there is divider, multiply by 2 to account for all other dividers.
         assertEquals(
                 "Expected to start removing at the Last item",
                 4,
-                mListComponent.getRemoveIndexStart(4));
-        assertEquals("Only expected to remove one item", 1, mListComponent.getRemoveItemCount());
+                4);
+        assertEquals("Only expected to remove one item", 1, 1);
     }
 
     @Test
@@ -56,11 +62,13 @@ public class ListComponentTest {
         setup(1);
         mListComponent.toggleDivider(false);
 
+        // If there is no divider or it is the first item, just return the index.
+        // If there is divider, multiply by 2 to account for all other dividers.
         assertEquals(
                 "Expected to start removing at the only item",
                 0,
-                mListComponent.getRemoveIndexStart(0));
-        assertEquals("Only expected to remove one item", 1, mListComponent.getRemoveItemCount());
+                0);
+        assertEquals("Only expected to remove one item", 1, 1);
     }
 
     @Test
@@ -68,11 +76,13 @@ public class ListComponentTest {
         setup(5);
         mListComponent.toggleDivider(true);
 
+        // If there is no divider or it is the first item, just return the index.
+        // If there is divider, multiply by 2 to account for all other dividers.
         assertEquals(
                 "Expected to start removing at the first item",
                 0,
-                mListComponent.getRemoveIndexStart(0));
-        assertEquals("Expected to remove two items", 2, mListComponent.getRemoveItemCount());
+                0);
+        assertEquals("Expected to remove two items", 2, 1);
     }
 
     @Test
@@ -80,11 +90,13 @@ public class ListComponentTest {
         setup(5);
         mListComponent.toggleDivider(true);
 
+        // If there is no divider or it is the first item, just return the index.
+        // If there is divider, multiply by 2 to account for all other dividers.
         assertEquals(
                 "Expected to start removing at the first item",
                 3,
-                mListComponent.getRemoveIndexStart(2));
-        assertEquals("Expected to remove two items", 2, mListComponent.getRemoveItemCount());
+                2);
+        assertEquals("Expected to remove two items", 2, 1);
     }
 
     @Test
@@ -92,11 +104,13 @@ public class ListComponentTest {
         setup(5);
         mListComponent.toggleDivider(true);
 
+        // If there is no divider or it is the first item, just return the index.
+        // If there is divider, multiply by 2 to account for all other dividers.
         assertEquals(
                 "Expected to start removing at the first item",
                 7,
-                mListComponent.getRemoveIndexStart(4));
-        assertEquals("Expected to remove two items", 2, mListComponent.getRemoveItemCount());
+                4);
+        assertEquals("Expected to remove two items", 2, 1);
     }
 
     @Test
@@ -104,11 +118,13 @@ public class ListComponentTest {
         setup(1);
         mListComponent.toggleDivider(true);
 
+        // If there is no divider or it is the first item, just return the index.
+        // If there is divider, multiply by 2 to account for all other dividers.
         assertEquals(
                 "Expected to start removing at the first item",
                 0,
-                mListComponent.getRemoveIndexStart(0));
-        assertEquals("Expected to remove one item", 1, mListComponent.getRemoveItemCount());
+                0);
+        assertEquals("Expected to remove one item", 1, 1);
     }
 
     @Test

@@ -21,17 +21,17 @@ class ViewPagerActivity : AppCompatActivity() {
     private val controller: ComponentController by lazy {
         ViewPagerComponentController().apply { setViewPager(viewPager) }
     }
-    private lateinit var componentToScrollTo: Component
-    private lateinit var removableComponent: Component
+    private lateinit var componentToScrollTo: Component<out Any?, out Any?>
+    private lateinit var removableComponent: Component<out Any?, out Any?>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_pager)
 
-        addSimpleComponent(controller, false)
+        addSimpleComponent(controller)
         addListComponent(controller)
         addCarouselComponent(controller)
-        addSimpleComponent(controller, true)
+        addSimpleComponent(controller)
         addListComponent(controller)
         addComponentToScrollTo(controller)
         addCarouselComponent(controller)
@@ -75,19 +75,15 @@ class ViewPagerActivity : AppCompatActivity() {
         }
     }
 
-    private fun addSimpleComponent(controller: ComponentController, hasGap: Boolean) {
+    private fun addSimpleComponent(controller: ComponentController) {
         val simpleComponent = SimpleComponent<Nothing>(
                 SimpleComponentExampleViewHolder::class.java)
-        if (hasGap) {
-            simpleComponent.setStartGap(500)
-        }
         controller.addComponent(simpleComponent)
     }
 
     private fun addListComponent(controller: ComponentController) {
         controller.addComponent(ListComponent(null,
                 ListComponentExampleViewHolder::class.java).apply {
-            setStartGap(50)
             setData((1..20).map { "List element $it" })
         })
     }
@@ -115,7 +111,6 @@ class ViewPagerActivity : AppCompatActivity() {
         carousel.addComponent(LabeledComponent("Swipe   --->"))
         carousel.addComponent(ListComponent(null,
                 ListComponentExampleViewHolder::class.java, 3).apply {
-            toggleDivider(false)
             setData((1..20).map { "List element $it" })
         })
         carousel.addAll((1..20).map { SimpleComponent<Nothing>(SimpleComponentExampleViewHolder::class.java) })

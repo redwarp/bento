@@ -25,15 +25,15 @@ class RecyclerViewActivity : AppCompatActivity() {
     private val componentController by lazy {
         RecyclerViewComponentController(recyclerView)
     }
-    private lateinit var componentToScrollTo: Component
+    private lateinit var componentToScrollTo: Component<out Any?, out Any?>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recycler_view)
 
-        addSimpleComponent(componentController, false)
+        addSimpleComponent(componentController)
         addListComponent(componentController)
-        addSimpleComponent(componentController, true)
+        addSimpleComponent(componentController)
         addListComponent(componentController)
         addComponentToScrollTo(componentController)
         addCarouselComponent(componentController)
@@ -66,7 +66,7 @@ class RecyclerViewActivity : AppCompatActivity() {
                 true
             }
             R.id.insert_at_zero -> {
-                addSimpleComponent(componentController, false, 0)
+                addSimpleComponent(componentController, 0)
                 true
             }
             else -> false
@@ -75,14 +75,11 @@ class RecyclerViewActivity : AppCompatActivity() {
 
     private fun addSimpleComponent(
             controller: ComponentController,
-            hasGap: Boolean,
             index: Int? = null
     ) {
         val simpleComponent = SimpleComponent<Nothing>(
                 SimpleComponentExampleViewHolder::class.java)
-        if (hasGap) {
-            simpleComponent.setStartGap(500)
-        }
+
         if (index != null) {
             controller.addComponent(index, simpleComponent)
         } else {
@@ -93,7 +90,6 @@ class RecyclerViewActivity : AppCompatActivity() {
     private fun addListComponent(controller: ComponentController) {
         controller.addComponent(ListComponent(null,
                 ListComponentExampleViewHolder::class.java).apply {
-            setStartGap(50)
             setData((1..20).map { "List element $it" })
         })
     }
@@ -113,7 +109,6 @@ class RecyclerViewActivity : AppCompatActivity() {
         carousel.addComponent(LabeledComponent("Swipe   --->"))
         carousel.addComponent(ListComponent(null,
                 ListComponentExampleViewHolder::class.java, 3).apply {
-            toggleDivider(false)
             setData((1..20).map { "List element $it" })
         })
         carousel.addAll((1..20).map { SimpleComponent<Nothing>(SimpleComponentExampleViewHolder::class.java) })

@@ -1,10 +1,10 @@
 package com.yelp.android.bento.components;
 
-import androidx.annotation.CallSuper;
-import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.yelp.android.bento.R;
 import com.yelp.android.bento.core.ComponentViewHolder;
@@ -16,7 +16,7 @@ import io.reactivex.subjects.BehaviorSubject;
  * furthest list data item {@link ListComponent#getItem} has been called on as well as adding a
  * toggleable loading footer.
  */
-public class PaginatingListComponent<P, T> extends ListComponent<P, T> {
+public class PaginatingListComponent<Presenter, Item> extends ListComponent<Object, Object> {
 
     private final BehaviorSubject<Integer> mFurthestObservable = BehaviorSubject.create();
     private int mFurthestItemDisplayed = -1;
@@ -25,14 +25,15 @@ public class PaginatingListComponent<P, T> extends ListComponent<P, T> {
             DefaultLoadingFooterViewHolder.class;
 
     public PaginatingListComponent(
-            @NonNull P presenter,
-            @NonNull Class<? extends ComponentViewHolder<P, T>> listItemViewHolder) {
-        super(presenter, listItemViewHolder);
+            @NonNull Presenter presenter,
+            @NonNull Class<? extends ComponentViewHolder<Presenter, Item>> listItemViewHolder) {
+        //noinspection unchecked
+        super(presenter, (Class<? extends ComponentViewHolder<Object, Object>>) listItemViewHolder);
     }
 
     @Nullable
     @Override
-    public P getPresenter(int position) {
+    public Object getPresenter(int position) {
         return mShouldShowFooter && position == (getCount() - 1)
                 ? null
                 : super.getPresenter(position);
@@ -51,7 +52,7 @@ public class PaginatingListComponent<P, T> extends ListComponent<P, T> {
 
     @NonNull
     @Override
-    public Class<? extends ComponentViewHolder> getHolderType(int position) {
+    public Class<? extends ComponentViewHolder<Object, Object>> getHolderType(int position) {
         return mShouldShowFooter && position == (getCount() - 1)
                 ? mLoadingFooter
                 : super.getHolderType(position);
@@ -88,7 +89,7 @@ public class PaginatingListComponent<P, T> extends ListComponent<P, T> {
 
     /**
      * @param loadingFooter The view holder to use for the loading indicator in the footer of the
-     *                      list.
+     *     list.
      */
     public void setLoadingFooter(@NonNull Class<? extends LoadingFooterViewHolder> loadingFooter) {
         mLoadingFooter = loadingFooter;
@@ -98,7 +99,8 @@ public class PaginatingListComponent<P, T> extends ListComponent<P, T> {
     }
 
     @SuppressWarnings("WeakerAccess") // Required to be public for instantiation by reflection
-    public abstract static class LoadingFooterViewHolder extends ComponentViewHolder {
+    public abstract static class LoadingFooterViewHolder
+            extends ComponentViewHolder<Object, Object> {
 
         @Override
         public final void bind(@Nullable Object presenter, @Nullable Object element) {

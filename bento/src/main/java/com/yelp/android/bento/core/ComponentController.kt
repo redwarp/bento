@@ -23,24 +23,24 @@ interface ComponentController {
     /**
      * Returns the [Component] at the specified position in this controller.
      */
-    operator fun get(index: Int): Component
+    operator fun get(index: Int): Component<out Any?, out Any?>
 
     /**
      * Returns whether or not the specified [Component] is in this controller.
      */
-    operator fun contains(component: Component): Boolean
+    operator fun contains(component: Component<out Any?, out Any?>): Boolean
 
     /**
      * Returns the position of the specified [Component] in this controller if it exists,
      * or -1 if it does not.
      */
-    fun indexOf(component: Component): Int
+    fun indexOf(component: Component<out Any?, out Any?>): Int
 
     /**
      * Returns the [Range] occupied by the items of the specified  [Component] in this
      * controller if it exists, or null if it does not.
      */
-    fun rangeOf(component: Component): Range?
+    fun rangeOf(component: Component<out Any?, out Any?>): Range?
 
     /**
      * Inserts the specified [Component] to the end of this controller.
@@ -48,7 +48,7 @@ interface ComponentController {
      * @param component [Component] to append
      * @return Reference to this controller
      */
-    fun addComponent(component: Component): ComponentController
+    fun addComponent(component: Component<out Any?, out Any?>): ComponentController
 
     /**
      * Inserts the specified [ComponentGroup] to the end of this controller.
@@ -65,7 +65,7 @@ interface ComponentController {
      * @param component [Component] to insert
      * @return Reference to this controller
      */
-    fun addComponent(index: Int, component: Component): ComponentController
+    fun addComponent(index: Int, component: Component<out Any?, out Any?>): ComponentController
 
     /**
      * Inserts the specified [ComponentGroup] to the specified position in this controller.
@@ -82,7 +82,7 @@ interface ComponentController {
      * @param components [Component]s to add
      * @return Reference to this controller
      */
-    fun addAll(components: Collection<Component>): ComponentController
+    fun addAll(components: Collection<Component<out Any?, out Any?>>): ComponentController
 
     /**
      * Replaces the [Component] at the specified position in this controller.
@@ -91,7 +91,7 @@ interface ComponentController {
      * @param component [Component] to insert
      * @return Reference to this controller
      */
-    fun replaceComponent(index: Int, component: Component): ComponentController
+    fun replaceComponent(index: Int, component: Component<out Any?, out Any?>): ComponentController
 
     /**
      * Replaces the [ComponentGroup] at the specified position in this controller.
@@ -108,7 +108,7 @@ interface ComponentController {
      * @param index Position to remove
      * @return Reference to this controller
      */
-    fun remove(index: Int): Component
+    fun remove(index: Int): Component<out Any?, out Any?>
 
     /**
      * Removes the specified [Component] from this controller if it exists.
@@ -116,7 +116,7 @@ interface ComponentController {
      * @param component [Component] to remove
      * @return Reference to this controller
      */
-    fun remove(component: Component): Boolean
+    fun remove(component: Component<out Any?, out Any?>): Boolean
 
     /**
      * Removes all [Component]s from this controller.
@@ -131,7 +131,7 @@ interface ComponentController {
      * @param component the component to scroll to
      * @param smoothScroll whether to animate the scroll or instantly move to the position
      */
-    fun scrollToComponent(component: Component, smoothScroll: Boolean = false)
+    fun scrollToComponent(component: Component<out Any?, out Any?>, smoothScroll: Boolean = false)
 
     /**
      * Scroll the controller until the specified component is at the top of the screen (or as close
@@ -142,5 +142,5 @@ interface ComponentController {
      * @param offset The distance (in pixels) from the start edge of the item view when scrolling
      *               is finished.
      */
-    fun scrollToComponentWithOffset(component: Component, offset: Int = 0)
+    fun scrollToComponentWithOffset(component: Component<out Any?, out Any?>, offset: Int = 0)
 }

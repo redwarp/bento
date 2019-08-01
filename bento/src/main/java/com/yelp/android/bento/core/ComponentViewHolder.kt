@@ -15,7 +15,7 @@ import android.view.ViewGroup
  * no-arg constructor. Unfortunately, this means all subclasses must be visible from this package
  * and provide a no-arg constructor.
  */
-abstract class ComponentViewHolder<P, T> {
+abstract class ComponentViewHolder<Presenter, Item> {
 
     /**
      * Contains the absolute position within the entire [ComponentController]. This should only be
@@ -40,23 +40,23 @@ abstract class ComponentViewHolder<P, T> {
      * the bind method. You should have fields for any views you wish to modify during the bind
      * method and instantiate them during inflation.
      */
-    abstract fun bind(presenter: P, element: T)
+    abstract fun bind(presenter: Presenter, element: Item)
 
     /**
      * Called when a view has been attached to a window.
-     * See [android.support.v7.widget.RecyclerView.Adapter.onViewAttachedToWindow]
+     * See [androidx.recyclerview.widget.RecyclerView.Adapter.onViewAttachedToWindow]
      */
     open fun onViewAttachedToWindow() {}
 
     /**
      * Called when a view has been detached from its window.
-     * See [android.support.v7.widget.RecyclerView.Adapter.onViewDetachedFromWindow]
+     * See [androidx.recyclerview.widget.RecyclerView.Adapter.onViewDetachedFromWindow]
      */
     open fun onViewDetachedFromWindow() {}
 
     /**
      * Called when a view has been recycled.
-     * See [android.support.v7.widget.RecyclerView.Adapter.onViewRecycled]
+     * See [androidx.recyclerview.widget.RecyclerView.Adapter.onViewRecycled]
      */
     open fun onViewRecycled() {}
 }

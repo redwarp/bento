@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_list_view.*
 class ListViewActivity : AppCompatActivity() {
 
     private lateinit var controller: ComponentController
-    private lateinit var componentToScrollTo: Component
+    private lateinit var componentToScrollTo: Component<out Any?, out Any?>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,9 +83,7 @@ class ListViewActivity : AppCompatActivity() {
     private fun addListComponent(controller: ComponentController) {
         with(ListComponent(null,
                 ListComponentExampleViewHolder::class.java)) {
-            setStartGap(50)
             setData((1 until 42).map { "List element $it" })
-            toggleDivider(false)
             controller.addComponent(this)
         }
     }
@@ -112,7 +110,6 @@ class ListViewActivity : AppCompatActivity() {
         carousel.addComponent(LabeledComponent("Swipe   --->"))
         carousel.addComponent(ListComponent(null,
                 ListComponentExampleViewHolder::class.java, 3).apply {
-            toggleDivider(false)
             setData((1..20).map { "List element $it" })
         })
         carousel.addAll((1..20).map { SimpleComponent<Nothing>(SimpleComponentExampleViewHolder::class.java) })

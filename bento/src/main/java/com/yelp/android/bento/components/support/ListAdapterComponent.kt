@@ -18,7 +18,7 @@ import com.yelp.android.bento.core.ComponentViewHolder
  *
  * NOTE: This should only be used with a [ListViewComponentController]
  */
-class ListAdapterComponent(private val listAdapter: ListAdapter) : Component() {
+class ListAdapterComponent(private val listAdapter: ListAdapter) : Component<Any?, Any?>() {
     private val presenters: LoadingCache<Int, Wrapper> =
             CacheBuilder.newBuilder().build(object : CacheLoader<Int, Wrapper>() {
                 override fun load(position: Int) = Wrapper(listAdapter, position)
@@ -32,7 +32,7 @@ class ListAdapterComponent(private val listAdapter: ListAdapter) : Component() {
 
     override fun getItem(position: Int): Any? = listAdapter.getItem(position)
 
-    override fun getCount(): Int = listAdapter.count
+    override val count: Int get() = listAdapter.count
 
     override fun getHolderType(position: Int) = ListAdapterHolderType::class.java
 
@@ -82,7 +82,7 @@ class ListAdapterComponent(private val listAdapter: ListAdapter) : Component() {
     }
 }
 
-abstract class ListViewComponentViewHolder<T> : ComponentViewHolder<ListAdapterComponent.Wrapper, T>() {
+abstract class ListViewComponentViewHolder<Item> : ComponentViewHolder<ListAdapterComponent.Wrapper, Item>() {
     abstract fun inflate(presenter: ListAdapterComponent.Wrapper, parent: ViewGroup): View
 
     final override fun inflate(parent: ViewGroup): View {

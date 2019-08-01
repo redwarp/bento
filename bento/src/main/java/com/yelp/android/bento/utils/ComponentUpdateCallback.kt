@@ -9,7 +9,7 @@ import com.yelp.android.bento.core.Component
  * val diff = DiffUtil.calculateDiff(...)
  * diff.dispatchUpdatesTo(ComponentUpdateCallback(yourComponent))
  */
-class ComponentUpdateCallback(val component: Component) : ListUpdateCallback {
+class ComponentUpdateCallback(val component: Component<out Any?, out Any?>) : ListUpdateCallback {
     override fun onChanged(position: Int, count: Int, payload: Any?) {
         component.notifyItemRangeChanged(position, count)
     }

@@ -26,6 +26,7 @@ class ComponentReplacementActivity : AppCompatActivity() {
         componentController.addComponent(ReplaceComponentButton(NUM_LABELED_COMPONENTS + 1) {
             componentController.replaceComponent(2, LabeledComponent(it.toString()))
         })
+
         componentController.addAll(List(NUM_LABELED_COMPONENTS) {
             LabeledComponent((it + 1).toString())
         })
@@ -35,12 +36,12 @@ class ComponentReplacementActivity : AppCompatActivity() {
 class ReplaceComponentButton(
         private var replacementId: Int,
         private val onComponentClicked: (replacenentId: Int) -> Unit
-): Component() {
+): Component<ReplaceComponentButton, Int>() {
     override fun getPresenter(position: Int) = this
 
     override fun getItem(position: Int) = replacementId
 
-    override fun getCount() = 1
+    override val count = 1
 
     override fun getHolderType(position: Int) = ReplaceComponentViewHolder::class.java
 

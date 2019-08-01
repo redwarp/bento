@@ -115,7 +115,7 @@ public class ViewPagerComponentController extends PagerAdapter implements Compon
 
     @NonNull
     @Override
-    public ComponentController addAll(@NonNull Collection<? extends Component> components) {
+    public ComponentController addAll(@NonNull Collection<? extends Component<?, ?>> components) {
         mComponentGroup.addAll(components);
         return this;
     }
@@ -178,7 +178,7 @@ public class ViewPagerComponentController extends PagerAdapter implements Compon
         if (!contains((Component) object)) {
             return POSITION_NONE;
         } else {
-            return indexOf((Component)object);
+            return indexOf((Component) object);
         }
     }
 

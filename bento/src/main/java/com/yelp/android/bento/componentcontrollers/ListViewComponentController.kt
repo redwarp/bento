@@ -48,15 +48,15 @@ class ListViewComponentController(val listView: ListView) :
 
     override fun get(index: Int) = components[index]
 
-    override fun contains(component: Component) = component in components
+    override fun contains(component: Component<out Any?, out Any?>) = component in components
 
-    override fun indexOf(component: Component) = components.indexOf(component)
+    override fun indexOf(component: Component<out Any?, out Any?>) = components.indexOf(component)
 
-    override fun rangeOf(component: Component): AccordionList.Range? {
+    override fun rangeOf(component: Component<out Any?, out Any?>): AccordionList.Range? {
         return components.rangeOf(component)
     }
 
-    override fun addComponent(component: Component): ComponentController {
+    override fun addComponent(component: Component<out Any?, out Any?>): ComponentController {
         components.addComponent(component)
         componentVisibilityListener.onComponentAdded(component)
         return this
@@ -68,7 +68,7 @@ class ListViewComponentController(val listView: ListView) :
         return this
     }
 
-    override fun addComponent(index: Int, component: Component): ComponentController {
+    override fun addComponent(index: Int, component: Component<out Any?, out Any?>): ComponentController {
         components.addComponent(index, component)
         componentVisibilityListener.onComponentAdded(component)
         return this
@@ -80,13 +80,13 @@ class ListViewComponentController(val listView: ListView) :
         return this
     }
 
-    override fun addAll(components: Collection<Component>): ComponentController {
+    override fun addAll(components: Collection<Component<out Any?, out Any?>>): ComponentController {
         this.components.addAll(components)
         components.forEach { componentVisibilityListener.onComponentAdded(it) }
         return this
     }
 
-    override fun replaceComponent(index: Int, component: Component): ComponentController {
+    override fun replaceComponent(index: Int, component: Component<out Any?, out Any?>): ComponentController {
         components.replaceComponent(index, component)
         return this
     }
@@ -96,11 +96,11 @@ class ListViewComponentController(val listView: ListView) :
         return this
     }
 
-    override fun remove(index: Int): Component {
+    override fun remove(index: Int): Component<out Any?, out Any?> {
         return components.remove(index)
     }
 
-    override fun remove(component: Component): Boolean {
+    override fun remove(component: Component<out Any?, out Any?>): Boolean {
         return components.remove(component)
     }
 
@@ -109,15 +109,15 @@ class ListViewComponentController(val listView: ListView) :
         componentVisibilityListener.clear()
     }
 
-    override fun scrollToComponent(component: Component, smoothScroll: Boolean) {
+    override fun scrollToComponent(component: Component<out Any?, out Any?>, smoothScroll: Boolean) {
         scrollToComponentInternal(component, smoothScroll)
     }
 
-    override fun scrollToComponentWithOffset(component: Component, offset: Int) {
+    override fun scrollToComponentWithOffset(component: Component<out Any?, out Any?>, offset: Int) {
         scrollToComponentInternal(component, offset = offset)
     }
 
-    private fun scrollToComponentInternal(component: Component, smoothScroll: Boolean = false, offset: Int = 0) {
+    private fun scrollToComponentInternal(component: Component<out Any?, out Any?>, smoothScroll: Boolean = false, offset: Int = 0) {
         val index = components.findComponentOffset(component)
         if (index != -1) {
             listView.smoothScrollToPositionFromTop(index,
@@ -290,7 +290,7 @@ class ListViewComponentController(val listView: ListView) :
             adapter.notifyDataSetChanged()
         }
 
-        override fun onComponentRemoved(component: Component) = onChanged()
+        override fun onComponentRemoved(component: Component<out Any?, out Any?>) = onChanged()
     }
 
     private class ListViewLayoutManagerHelper(val listView: ListView) :

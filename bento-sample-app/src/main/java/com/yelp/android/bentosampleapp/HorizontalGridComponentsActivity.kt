@@ -11,7 +11,7 @@ import com.yelp.android.bentosampleapp.components.HorizontalComponentExampleView
 import com.yelp.android.bentosampleapp.components.LabeledComponent
 import kotlinx.android.synthetic.main.activity_recycler_view.*
 
-class HorizontalGridComponentsActivity: AppCompatActivity() {
+class HorizontalGridComponentsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recycler_view)
@@ -25,11 +25,10 @@ class HorizontalGridComponentsActivity: AppCompatActivity() {
     }
 
     private fun createSimplePaddedListComponent(rows: Int): ListComponent<out Any?, String> {
-        return ListComponent<Any, String>(null, HorizontalComponentExampleViewHolder::class.java, rows).apply {
-            toggleDivider(false)
+        return ListComponent<Any, String>(null,
+                HorizontalComponentExampleViewHolder::class.java,
+                rows).apply {
             setData((0..9).map { "$rows:$it" })
-            setStartGap(50)
-            setEndGap(50)
             spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return if (position % (numberLanes + 1) == 0) numberLanes else 1

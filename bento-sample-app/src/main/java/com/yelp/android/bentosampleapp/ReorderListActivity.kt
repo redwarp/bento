@@ -38,7 +38,6 @@ class ReorderListActivity : AppCompatActivity(), Presenter {
     private fun addUnorderableListComponent() {
         componentController.addComponent(LabeledComponent("No reorder"))
         val list = ListComponent(Unit, LabeledComponentViewHolder::class.java, 2)
-        list.toggleDivider(false)
         list.setData((0..10).map { it.toString() })
         componentController.addComponent(list)
     }
@@ -47,7 +46,6 @@ class ReorderListActivity : AppCompatActivity(), Presenter {
         componentController.addComponent(LabeledComponent("Long press to reorder"))
         val longPressComponent = ListComponent(Unit, LabeledComponentViewHolder::class.java, 2)
         longPressComponent.setIsReorderable(true)
-        longPressComponent.toggleDivider(false)
         longPressComponent.setData((0..10).map { 'a'.plus(it).toString() })
         longPressComponent.setOnItemMovedCallback(object : OnItemMovedCallback<String> {
             override fun onItemMoved(oldIndex: Int, newIndex: Int) {
@@ -61,7 +59,6 @@ class ReorderListActivity : AppCompatActivity(), Presenter {
         val handleComponent =
                 ListComponent(this, ReorderViewHolder::class.java, 2)
         handleComponent.setIsReorderable(true)
-        handleComponent.toggleDivider(false)
         handleComponent.setData((0..10).map { 'A'.plus(it).toString() })
         handleComponent.setOnItemMovedCallback(object : OnItemMovedCallback<String> {
             override fun onItemMoved(oldIndex: Int, newIndex: Int) {
@@ -109,7 +106,7 @@ class ReorderViewHolder : ComponentViewHolder<Presenter, String>() {
     }
 }
 
-class ReorderAllButLastComponent : Component() {
+class ReorderAllButLastComponent : Component<Unit, String>() {
 
     val data = (0 until 10).toMutableList()
 
@@ -121,7 +118,7 @@ class ReorderAllButLastComponent : Component() {
         data[position].toString()
     }
 
-    override fun getCount(): Int = data.size
+    override val count: Int = data.size
 
     override fun getHolderType(position: Int) = LabeledComponentViewHolder::class.java
 

@@ -90,7 +90,7 @@ class ComponentVisibilityListener(
      *
      * @param addedComponent the component that has been added to this controller
      */
-    fun onComponentAdded(addedComponent: Component) {
+    fun onComponentAdded(addedComponent: Component<out Any?, out Any?>) {
         // If we didn't have a first and last then we haven't shown any components yet and we
         // can bail early. Everything will be handled by onScrolled().
         if (previousFirst == NO_POSITION && previousLast == NO_POSITION) {
