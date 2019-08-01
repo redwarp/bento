@@ -281,7 +281,7 @@ public class RecyclerViewComponentController
 
     @Override
     public void onItemMovedPosition(int fromAbsoluteIndex, int toAbsoluteIndex) {
-        RangedValue<Component> componentMoved =
+        RangedValue<Component<?, ?>> componentMoved =
                 mComponentGroup.findRangedComponentWithIndex(fromAbsoluteIndex);
 
         int fromIndex = fromAbsoluteIndex - componentMoved.mRange.mLower;

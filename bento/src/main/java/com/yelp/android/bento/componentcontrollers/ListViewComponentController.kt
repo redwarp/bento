@@ -68,7 +68,10 @@ class ListViewComponentController(val listView: ListView) :
         return this
     }
 
-    override fun addComponent(index: Int, component: Component<out Any?, out Any?>): ComponentController {
+    override fun addComponent(
+            index: Int,
+            component: Component<out Any?, out Any?>
+    ): ComponentController {
         components.addComponent(index, component)
         componentVisibilityListener.onComponentAdded(component)
         return this
@@ -86,7 +89,10 @@ class ListViewComponentController(val listView: ListView) :
         return this
     }
 
-    override fun replaceComponent(index: Int, component: Component<out Any?, out Any?>): ComponentController {
+    override fun replaceComponent(
+            index: Int,
+            component: Component<out Any?, out Any?>
+    ): ComponentController {
         components.replaceComponent(index, component)
         return this
     }
@@ -109,15 +115,25 @@ class ListViewComponentController(val listView: ListView) :
         componentVisibilityListener.clear()
     }
 
-    override fun scrollToComponent(component: Component<out Any?, out Any?>, smoothScroll: Boolean) {
+    override fun scrollToComponent(
+            component: Component<out Any?, out Any?>,
+            smoothScroll: Boolean
+    ) {
         scrollToComponentInternal(component, smoothScroll)
     }
 
-    override fun scrollToComponentWithOffset(component: Component<out Any?, out Any?>, offset: Int) {
+    override fun scrollToComponentWithOffset(
+            component: Component<out Any?, out Any?>,
+            offset: Int
+    ) {
         scrollToComponentInternal(component, offset = offset)
     }
 
-    private fun scrollToComponentInternal(component: Component<out Any?, out Any?>, smoothScroll: Boolean = false, offset: Int = 0) {
+    private fun scrollToComponentInternal(
+            component: Component<out Any?, out Any?>,
+            smoothScroll: Boolean = false,
+            offset: Int = 0
+    ) {
         val index = components.findComponentOffset(component)
         if (index != -1) {
             listView.smoothScrollToPositionFromTop(index,
@@ -169,13 +185,15 @@ class ListViewComponentController(val listView: ListView) :
             }
         }
 
+        @Suppress("UNCHECKED_CAST")
         private fun createFreshView(position: Int, parent: ViewGroup): View {
-            val holderType: Class<out ComponentViewHolder<Any?, Any?>> =
+            val holderType: Class<out ComponentViewHolder<out Any?, out Any?>> =
                     components.getHolderType(position)
-            val holder = holderType.newInstance()
+            val holder: ComponentViewHolder<Any?, Any?> =
+                    holderType.newInstance() as ComponentViewHolder<Any?, Any?>
             val view = if (holder is ListViewComponentViewHolder) {
-                holder.inflate(components.getPresenter(position) as ListAdapterComponent.Wrapper,
-                        parent)
+                holder.inflate(components.getPresenter(position)
+                        as ListAdapterComponent.Wrapper, parent)
             } else {
                 // The ListView set its child views with an AbsListView.LayoutParam, which doesn't
                 // handle parameters like margins. By wrapping the view in a FrameLayout, we ensure
@@ -214,7 +232,7 @@ class ListViewComponentController(val listView: ListView) :
             val component = components.componentAt(position)
             val holderType = if (component is ListAdapterComponent) {
                 val innerPosition = position - (components.rangeOf(component)?.mLower
-                        ?: return ListAdapter.IGNORE_ITEM_VIEW_TYPE)
+                    ?: return ListAdapter.IGNORE_ITEM_VIEW_TYPE)
                 component.getViewType(innerPosition)
             } else {
                 components.getHolderType(position)
@@ -259,7 +277,7 @@ class ListViewComponentController(val listView: ListView) :
             val component = components.componentAt(position)
             return if (component is ListAdapterComponent) {
                 val innerPosition = position - (components.rangeOf(component)?.mLower
-                        ?: return false)
+                    ?: return false)
                 component.isEnabled(innerPosition)
             } else {
                 false
